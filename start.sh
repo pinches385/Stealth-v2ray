@@ -1,13 +1,18 @@
 #!/bin/bash
 
-mkdir -p /usr/share/caddy
-wget -O /usr/share/caddy/index.html https://github.com/AYJCSGM/mikutap/archive/master.zip
-wget -O /usr/bin/caddy https://raw.githubusercontent.com/Lbingyi/HerokuXray/master/etc/caddy
-chmod +x /usr/bin/caddy
-sed -i "s/b5fa18f4-a281-4230-b2c5-bd9a1754552e/$UUID/g" /etc/v2ray/config.json
-wget -O /etc/v2ray/config.json https://raw.githubusercontent.com/Lbingyi/HerokuXray/master/etc/config.json
-mkdir -p /etc/v2ray
-wget -O /etc/v2ray/config.json https://raw.githubusercontent.com/Lbingyi/HerokuXray/master/etc/config.json
-ls -la /etc/v2ray
-caddy run --config /etc/caddy/Caddyfile --adapter caddyfile &
-/usr/bin/v2ray -config /etc/v2ray/config.json
+# Create necessary directories
+mkdir -p /usr/bin /etc/v2ray
+
+# Download latest v2ray-core release
+wget -O /tmp/v2ray-linux.zip https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip
+
+# Unzip and install
+unzip /tmp/v2ray-linux.zip -d /tmp/v2ray
+install -m 755 /tmp/v2ray/v2ray /usr/bin/v2ray
+install -m 755 /tmp/v2ray/v2ctl /usr/bin/v2ctl
+
+# Start caddy (reverse proxy)
+caddy run --config /etc/caddy/Caddyfile &
+
+# Start v2ray with config
+/usr/bin/v2ray run -config /app/config.json
