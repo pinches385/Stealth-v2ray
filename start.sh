@@ -11,8 +11,8 @@ unzip /tmp/v2ray-linux.zip -d /tmp/v2ray
 install -m 755 /tmp/v2ray/v2ray /usr/bin/v2ray
 install -m 755 /tmp/v2ray/v2ctl /usr/bin/v2ctl
 
-# Start caddy (reverse proxy)
-caddy run --config /etc/caddy/Caddyfile &
+# Start v2ray in the background
+/usr/bin/v2ray run -config /app/config.json &
 
-# Start v2ray with config
-/usr/bin/v2ray run -config /app/config.json
+# Start caddy after v2ray is ready
+caddy run --config /etc/caddy/Caddyfile
