@@ -1,15 +1,16 @@
 {
   "log": {
-    "loglevel": "none"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
       "port": 8080,
+      "listen": "0.0.0.0",
       "protocol": "vmess",
       "settings": {
         "clients": [
           {
-            "id": "b5fa18f4-a281-4230-b2c5-bd9a1754552e",
+            "id": "be51ce6e-8d41-44f3-8d17-4b6c27356c93",
             "alterId": 0
           }
         ]
@@ -17,14 +18,15 @@
       "streamSettings": {
         "network": "ws",
         "wsSettings": {
-          "path": "/ray"
+          "path": "/stealth"
         }
       }
     }
   ],
   "outbounds": [
     {
-      "protocol": "freedom"
+      "protocol": "freedom",
+      "settings": {}
     }
   ]
 }
